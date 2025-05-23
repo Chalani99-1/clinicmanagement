@@ -1,0 +1,210 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="6" [rowspan]="10">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Prescription Detail</mat-card-title>
+      </mat-card-header>
+      <mat-card-content id="prescriptionform">
+        <mat-form #myForm [formGroup]="form" >
+          <mat-form-field appearance="outline">
+            <mat-label>Patient</mat-label>
+            <mat-select formControlName="patientattendence">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let patientattendence of patientattendences" [value]="patientattendence">{{patientattendence.patient.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-form>
+
+        <div id="innertable">
+          <form #myInnerForm [formGroup]="innerform">
+            <mat-form-field appearance="outline">
+              <mat-label>Dose</mat-label>
+              <input matInput formControlName="dose">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Description</mat-label>
+              <input matInput formControlName="description">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Days</mat-label>
+              <input matInput formControlName="days">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Drug</mat-label>
+              <mat-select formControlName="drug">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let drug of drugs" [value]="drug">{{drug.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Drug shedule</mat-label>
+              <mat-select formControlName="drugshedule">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let drugshedule of drugshedules" [value]="drugshedule">{{drugshedule.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Meal</mat-label>
+              <mat-select formControlName="meal">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let meal of meals" [value]="meal">{{meal.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button id="btnAdd" (click)="btnaddMc()">Add</button>
+          </form>
+
+          <mat-table id="tableInner" [dataSource]="indata">
+            <ng-container *ngFor="let column of incolumns;let i = index;" [matColumnDef]="column">
+              <mat-header-cell *matHeaderCellDef> {{ inheaders[i] }}</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div *ngIf="i<inbinders.length-1" [innerHTML]="uiassist.getProperty(element, inbinders[i])"></div>
+                <div *ngIf="i>=inbinders.length-1">
+                  <button mat-raised-button id="removeBtn" (click)="deleteRaw(element)">Remove</button>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="incolumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: incolumns" (click)="fillInnerForm(row)"></mat-row>
+          </mat-table>
+
+        </div>
+
+        <mat-form #myForm [formGroup]="form" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select the Date</mat-label>
+            <input matInput [matDatepicker]="presDate" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="presDate"></mat-datepicker-toggle>
+            <mat-datepicker #presDate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Prescription Status</mat-label>
+            <mat-select formControlName="prescriptionstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let prescriptionstatus of prescriptionstatuses" [value]="prescriptionstatus">{{prescriptionstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Doctor</mat-label>
+            <mat-select formControlName="employee">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.fullname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" >Add</button>
+            <button mat-raised-button (click)="clear()">Clear</button>
+            <button mat-raised-button (click)="update()">Update</button>
+            <button mat-raised-button (click)="delete()">Delete</button>
+          </div>
+
+        </mat-form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="6" [rowspan]="4">
+    <mat-card id="ssearch">
+      <mat-card-header>
+        <mat-card-title>Prescription Search</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <mat-form [formGroup]="ssearch">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Prescription Status</mat-label>
+            <mat-select formControlName="ssprescriptionstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let prescriptionstatus of prescriptionstatuses" [value]="prescriptionstatus.id">{{prescriptionstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Patient Name</mat-label>
+            <mat-select formControlName="sspatientattendence">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let patientattendence of patientattendences" [value]="patientattendence.patient.nic">{{patientattendence.patient.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Doctor Name</mat-label>
+            <mat-select formControlName="ssemployee">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.fullname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butssearch">
+            <button mat-raised-button color="primary" (click)="btnSearchMc()"><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()"><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+        </mat-form>
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="6" [rowspan]="6">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Prescription Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{headers[i]}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn"  (keyup)="filterTable()">
+                </mat-form-field>
+              </mat-form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]"></mat-paginator>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+
+</mat-grid-list>
+
+
+
+
+

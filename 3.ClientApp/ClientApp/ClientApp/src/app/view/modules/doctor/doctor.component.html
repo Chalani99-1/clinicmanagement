@@ -1,0 +1,253 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="4" [rowspan]="10">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Doctor Detail</mat-card-title>
+      </mat-card-header>
+      <mat-card-content id="doctorform">
+      <form [formGroup]="form">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Doctor</mat-label>
+          <mat-select formControlName="employee">
+            <mat-option [value]="null" selected>Not Selected</mat-option>
+            <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.fullname+' - '+employee.number}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select a Speciality</mat-label>
+          <mat-select formControlName="speciality">
+            <mat-option [value]="null">Not Selected</mat-option>
+            <mat-option *ngFor="let speciality of specialities" [value]="speciality">{{speciality.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+<!--        <mat-label>Main Degree</mat-label>-->
+        <br> <br>
+        <mat-form-field appearance="outline">
+          <mat-label>Select First Country</mat-label>
+          <mat-select formControlName="country">
+            <mat-option [value]="null">Not Selected</mat-option>
+            <mat-option *ngFor="let country of countries" [value]="country">{{country.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select a Year</mat-label>
+          <input matInput [matDatepicker]="MainDgyear" formControlName="degreeyear">
+          <mat-datepicker-toggle matIconSuffix [for]="MainDgyear"></mat-datepicker-toggle>
+          <mat-datepicker #MainDgyear></mat-datepicker>
+        </mat-form-field>
+
+        <mat-label>All - Degrees</mat-label>
+        <br> <br>
+        <div id="innertable">
+          <mat-form [formGroup]="innerform">
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select a Country</mat-label>
+              <mat-select formControlName="extcountry">
+                <mat-option [value]="null">Not Selected</mat-option>
+                <mat-option *ngFor="let country of countries" [value]="country">{{country.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select a University</mat-label>
+              <mat-select formControlName="extuniversity">
+                <mat-option [value]="null">Not Selected</mat-option>
+                <mat-option *ngFor="let university of extdegreeuniversities" [value]="university">{{university.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select a Degree</mat-label>
+              <mat-select formControlName="extdegree">
+                <mat-option [value]="null">Not Selected</mat-option>
+                <mat-option *ngFor="let degree of extdegrees" [value]="degree">{{degree.name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+              <mat-label>Select a Year</mat-label>
+              <input matInput [matDatepicker]="year" formControlName="year">
+              <mat-datepicker-toggle matIconSuffix [for]="year"></mat-datepicker-toggle>
+              <mat-datepicker #year></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-raised-button id="btnAdd" (click)="btnaddMc()" >Add</button>
+
+          </mat-form>
+
+          <mat-table [dataSource]="indata">
+            <ng-container *ngFor="let column of incolumns;let i = index;" [matColumnDef]="column">
+              <mat-header-cell *matHeaderCellDef> {{inheaders[i]}} </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div *ngIf="i<inbinders.length-1" [innerHTML]="uiassist.getProperty(element, inbinders[i])"></div>
+                <div *ngIf="i>=inbinders.length-1">
+                  <button mat-raised-button (click)="deleteRaw(element)">Remove</button>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="incolumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: incolumns" (click)="fillInnerForm(row)"></mat-row>
+          </mat-table>
+
+        </div>
+
+
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select a Doctor grade</mat-label>
+          <mat-select formControlName="doctorgrade">
+            <mat-option [value]="null">Not Selected</mat-option>
+            <mat-option *ngFor="let doctorgrade of doctorgrades" [value]="doctorgrade">{{doctorgrade.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>SLMC registered number</mat-label>
+          <input type="text" placeholder="SLMC/XXXX/year" matInput formControlName="slmcregno">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>SLMC registered Date</mat-label>
+          <input matInput [matDatepicker]="slmcregdate" formControlName="doslmcregisterd">
+          <mat-datepicker-toggle matIconSuffix [for]="slmcregdate"></mat-datepicker-toggle>
+          <mat-datepicker #slmcregdate></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Foreign training</mat-label>
+          <input matInput formControlName="foreigntraining">
+        </mat-form-field>
+
+
+        <div id="butpanel">
+          <button mat-raised-button (click)="add()" >Add</button>
+          <button mat-raised-button (click)="clear()">Clear</button>
+          <button mat-raised-button (click)="update()" >Update</button>
+          <button mat-raised-button (click)="delete()" >Delete</button>
+        </div>
+
+      </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="8" [rowspan]="4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Doctor Search</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form [formGroup]="ssearch">
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Number</mat-label>
+            <input matInput formControlName="ssemployee">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Fullname</mat-label>
+            <input matInput formControlName="ssfullname">
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by NIC</mat-label>
+            <input matInput formControlName="ssnic">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by SLMC reg number</mat-label>
+            <input matInput formControlName="ssslmcregno">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Speciality</mat-label>
+            <mat-select formControlName="ssspeciality">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let speciality of specialities" [value]="speciality.id">{{speciality.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="sscountry">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let country of countries" [value]="country.id">{{country.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butssearch">
+             <button mat-raised-button (click)="btnSearchMc()"><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button (click)="btnSearchClearMc()"><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+
+
+        </mat-form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="8" [rowspan]="6">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Doctor Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{headers[i]}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
+            <mat-header-cell *matHeaderCellDef>
+              <form [formGroup]="cssearch" class="csearch">
+                <mat-form-field appearance="fill">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
+                </mat-form-field>
+              </form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]" showFirstLastButtons></mat-paginator>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
+
+

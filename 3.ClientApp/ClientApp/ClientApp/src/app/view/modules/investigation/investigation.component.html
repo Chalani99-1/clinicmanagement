@@ -1,0 +1,201 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+
+  <mat-grid-tile [colspan]="4" [rowspan]="10">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Investigation Detail</mat-card-title>
+      </mat-card-header>
+      <mat-card-content id="investigationform">
+        <form [formGroup]="form" >
+
+          <mat-form-field appearance="outline">
+            <mat-label>Patient</mat-label>
+            <mat-select formControlName="patientattendence">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let patientattendence of patientattendences" [value]="patientattendence">{{patientattendence.patient.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Report Type</mat-label>
+            <mat-select formControlName="reporttype">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let reporttype of reporttypes" [value]="reporttype">{{reporttype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Investigation status</mat-label>
+            <mat-select formControlName="investigationstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let investigationstatus of investigationstatuses" [value]="investigationstatus">{{investigationstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Investigation result</mat-label>
+            <mat-select formControlName="investigationresult">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let investigationresult of investigationresults" [value]="investigationresult">{{investigationresult.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="imgpanel">
+            <img [src]="imageempurl">
+            <input id="userImage" hidden="hidden" (change)="selectImage($event)" Select type="file" formControlName="report">
+            <label for="userImage" id="selectbutton">Select</label>
+            <label id="clearbutton" (click)="clearImage()">Clear</label>
+          </div>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Reported Date</mat-label>
+            <input matInput [matDatepicker]="repodate" formControlName="reporteddate">
+            <mat-datepicker-toggle matIconSuffix [for]="repodate"></mat-datepicker-toggle>
+            <mat-datepicker #repodate></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Conclution</mat-label>
+            <input matInput formControlName="conclution">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Doctor</mat-label>
+            <mat-select formControlName="employee">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.fullname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div id="butpanel">
+            <button mat-raised-button (click)="add()" >Add</button>
+            <button mat-raised-button (click)="clear()">Clear</button>
+            <button mat-raised-button (click)="update()">Update</button>
+            <button mat-raised-button (click)="delete()" >Delete</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="8" [rowspan]="4">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Investigation Search</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form [formGroup]="ssearch">
+          <mat-form-field appearance="outline">
+            <mat-label>Investigation Status</mat-label>
+            <mat-select formControlName="ssinvestigationstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let investigationstatus of investigationstatuses" [value]="investigationstatus.id">{{investigationstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Investigation Result</mat-label>
+            <mat-select formControlName="ssinvestigationresult">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let investigationresult of investigationresults" [value]="investigationresult.id">{{investigationresult.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Report Type</mat-label>
+            <mat-select formControlName="ssreporttype">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let reporttype of reporttypes" [value]="reporttype.id">{{reporttype.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Patient Name</mat-label>
+            <mat-select formControlName="sspatientattendence">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let patientattendence of patientattendences" [value]="patientattendence.patient.nic">{{patientattendence.patient.name+'('+patientattendence.patient.nic+')'}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Doctor Name</mat-label>
+            <mat-select formControlName="ssemployee">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee.id">{{employee.fullname}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Search by Nic</mat-label>
+            <input matInput formControlName="ssnic">
+          </mat-form-field>
+          <br>
+
+          <div id="butssearch">
+            <button mat-raised-button color="primary" (click)="btnSearchMc()"><mat-icon>search</mat-icon> Search </button>
+            <button mat-raised-button color="primary" (click)="btnSearchClearMc()"><mat-icon>reorder</mat-icon> Clear Search </button>
+          </div>
+
+        </mat-form>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+
+  <mat-grid-tile [colspan]="8" [rowspan]="6">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Investigation Table</mat-card-title>
+        <div id="loading">
+          <img [src]="imageurl">
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+
+        <mat-table [dataSource]="data">
+
+          <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef> {{headers[i]}} </mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }} </mat-cell>
+          </ng-container>
+
+          <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn" >
+            <mat-header-cell *matHeaderCellDef>
+              <form [formGroup]="csearch" class="csearch">
+                <mat-form-field appearance="outline">
+                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
+                </mat-form-field>
+              </form>
+            </mat-header-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+          <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
+
+
+        </mat-table>
+
+        <mat-paginator [length]="20" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]"></mat-paginator>
+
+      </mat-card-content>
+
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
+
+
+
+
+
+
+

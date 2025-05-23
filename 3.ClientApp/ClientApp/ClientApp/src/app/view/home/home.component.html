@@ -1,0 +1,78 @@
+<mat-grid-list gutterSize="7" [cols]="4" rowHeight="4rem" style="background-image: url('assets/mainwinbackground.png')">
+
+  <mat-grid-tile [colspan]="4" [rowspan]="2" >
+    <mat-card style="background-image: url('assets/mainwindow.png')"><img id="headImg" src="assets/emblem.png"></mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="4" [rowspan]="4" id="quicklinks">
+    <mat-card>
+      <mat-card-content><img  src="assets/Patient.png"></mat-card-content>
+      <mat-card-footer ><a routerLink="patients">Patient</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/Doctor.png"></mat-card-content>
+      <mat-card-footer ><a routerLink="doctors" >Doctor</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/Clinic.png"></mat-card-content>
+      <mat-card-footer ><a routerLink="clinics">Clinic</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/Drug.png"></mat-card-content>
+      <mat-card-footer ><a routerLink="drugs">Drug</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/investigation.jpg"></mat-card-content>
+      <mat-card-footer ><a routerLink="investigations">Investigation</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/treatment.jpg"></mat-card-content>
+      <mat-card-footer ><a routerLink="treatments">Treatment</a></mat-card-footer>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content><img  src="assets/Prescribe.png"></mat-card-content>
+      <mat-card-footer ><a routerLink="prescriptions">Prescription</a></mat-card-footer>
+    </mat-card>
+
+
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2" [rowspan]="4" >
+    <mat-card>
+      <mat-card-title style="background-color: #035159">User Specific Messages</mat-card-title>
+      <mat-card-content >
+        <mat-list>
+          <mat-list-item *ngFor="let message of userspecmessages">
+            <mat-icon matListItemIcon> email</mat-icon>
+            <div matListItemTitle >{{message.name}}</div>
+            <div matListItemLine>{{message.updated | date}}</div>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+
+
+  <mat-grid-tile [colspan]="2" [rowspan]="4" >
+      <mat-card>
+        <mat-card-title style="background-color:#035159">General Messages</mat-card-title>
+        <mat-card-content >
+          <mat-list>
+            <mat-list-item *ngFor="let message of generalmessages">
+              <mat-icon matListItemIcon> email</mat-icon>
+              <div matListItemTitle >{{message.name}}</div>
+              <div matListItemLine>{{message.updated | date}}</div>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+  </mat-grid-tile>
+
+</mat-grid-list>

@@ -1,0 +1,93 @@
+.dashboard-chart-card{
+  background: white;
+  width: 100%;
+  height: 87%;
+  margin-top: unset;
+  margin-right: 30px;
+  margin-left: 30px;
+  padding-bottom: unset;
+  position: relative;
+  border-radius: 10px;
+}
+
+.dashboard-chart-card mat-card-content{
+  right: -5px !important;
+  top: 50px;
+}
+
+.dashboard-chart-card mat-card-header{
+  background: #24A49B;
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.dashboard-card {
+  background: #24A49B;
+  width: 100%;
+  height: 84%;
+  margin-top: 30px;
+  margin-right: 30px;
+  margin-left: 30px;
+  padding-bottom: unset;
+  position: relative;
+  border-radius: 10px;
+}
+
+.dashboard-card mat-card-header {
+  border-radius: 10px;
+  /*background: #fd3b3c;*/
+  height: 100px;
+  font-weight: bold;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+mat-card-header .icon {
+  font-size: 50px;
+  height: 50px ;
+  width: 50px;
+  margin-right: 16px;
+  position: absolute;
+  top: 15px;
+}
+
+mat-card-header .title {
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+mat-card-content {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  top: 70px;
+  right: 16px;
+  margin: 0;
+}
+
+#patientchart div{
+  background: #07AD99 !important;
+  position: absolute;
+  left: -3015%;
+}
+
+#crrntDate{
+  color: #07AD99;
+  position: absolute;
+  top: 70px;
+  left: -55px;
+  font-size: 38px;
+}
+
+#crrntTime{
+  color: hotpink;
+  position: relative;
+  top: 180px;
+  left: -55px;
+  font-weight: bold;
+  font-size: 60px;
+}

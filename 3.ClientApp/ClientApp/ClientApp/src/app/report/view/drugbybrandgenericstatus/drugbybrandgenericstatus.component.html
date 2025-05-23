@@ -1,0 +1,53 @@
+<mat-grid-list [cols]="12" rowHeight="4rem">
+  <mat-form [formGroup]="form">
+    <mat-grid-tile [colspan]="4" [rowspan]="2">
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Brand</mat-label>
+            <mat-select formControlName="brand">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let brand of brands" [value]="brand.id" (click)="getChartData()">{{brand.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="4" [rowspan]="2">
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Generic</mat-label>
+            <mat-select formControlName="generic">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let generic of generics" [value]="generic.id" (click)="getChartData()">{{generic.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="4" [rowspan]="2">
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Drug Status</mat-label>
+            <mat-select formControlName="drugstatus">
+              <mat-option [value]="null" selected>Not Selected</mat-option>
+              <mat-option *ngFor="let drugstatus of drugstatuses" [value]="drugstatus.id" (click)="getChartData()">{{drugstatus.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-form>
+  <mat-grid-tile [colspan]="12" [rowspan]="8">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Drug by Brand or Generic or Status</mat-card-title>
+      </mat-card-header>
+      <mat-card-content><div #drugbarchart></div></mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

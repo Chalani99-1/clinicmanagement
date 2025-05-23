@@ -1,0 +1,122 @@
+mat-card { box-shadow: unset ;  width: 100%;  height:100%;  margin: 10px 10px -10px 10px; border-top-left-radius: 10px; border-top-right-radius: 10px; }
+
+mat-card-content { overflow: auto; height: 100%; padding-top: 20px }
+
+mat-card-header { background:  #24A49B; font-weight: bold ;color:white; border-top-left-radius: 10px;border-top-right-radius: 10px;}
+
+#loading img{ width: 30px; height: 25px; margin-left: 200px;}
+
+.csearch{margin-left: -20px; height: 40px;   width: 90px;  margin-top: 5px;    }
+
+#ssearch mat-card-content{ padding-top: 30px;  }
+
+#ssearch mat-form-field {padding-left: 15px; width: 200px;}
+#ssearch button{ width: 195px; margin-left:10px; margin-top: 5px; background-color: #024046;  }
+
+
+#drugform mat-card-content{ padding-top: 30px; width: 400px }
+#drugform {padding-bottom: 100px}
+
+#butpanel button{ width: 82px;margin:3px;background-color: #024046;color: white;}
+
+#listtrnasfer1 {display: inline-list-item; margin-bottom: 30px;margin-left: 10px; }
+#listtrnasfer2 {display: inline-list-item; margin-bottom: 30px;margin-left: 10px; }
+#listtrnasfer3 {display: inline-list-item; margin-bottom: 30px;margin-left: 10px; }
+
+
+
+#pnlmiddle1 button{ margin: 3px;height:20px;display: inline-list-item!important;}
+#pnlmiddle2 button{ margin: 3px;height:20px;display: inline-list-item!important;}
+#pnlmiddle3 button{ margin: 3px;height:20px;display: inline-list-item!important;}
+
+.list{border: solid gray;  border-radius: 5px; max-height: 160px; width: 300px;margin-top: 10px; overflow: auto}
+
+.list mat-list-option{ height: 27px;}
+
+.list .mat-mdc-list-item .mdc-list-item__primary-text{ font-size: 14px!important;}
+
+
+.selected-row{ background-color: #D2FEF1!important; }
+
+.mat-row:hover { background-color: inherit!important; }
+
+/* Employee Form */
+
+
+
+/* Employee Form > Photo Panel  */
+#imgpanel {
+  height: 110px;
+  margin-bottom: 60px;
+  border: black;
+}
+
+#imgpanel img{
+  height: 100px;
+  width: 100px;
+  margin-top:10px;
+  margin-left:-5px;
+  margin-bottom: -5px;
+
+}
+
+#selectbutton, #clearbutton{
+  width: 85px;
+  height: 12px;
+  display: block;
+  margin-bottom: 14px;
+  background-color: #024046;
+  color: white;
+  font-size: small;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+#selectbutton{
+  margin-top: 4px;
+  margin-left:-5px;
+}
+#clearbutton{
+  margin-top: -45.5px;
+  margin-left:105px;
+}
+
+
+/* Employee Form > Button Panel  */
+#butpanel{  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+#butpanel button{
+  width: 82px;
+  height: 30px;
+  margin:3px;
+  background-color: #024046;
+  color: white;
+}
+
+
+.selected-row{
+  background-color: #D2F8FE!important;
+}
+
+.mat-row:hover {
+  background-color: inherit!important;
+}
+
+#doctorform mat-form-field .ng-dirty{
+  background-color: gold;
+}
+
+/*button:disabled {*/
+/*  opacity: 0.5;*/
+/*}*/
+
+
+#drugform mat-form-field .ng-valid,
+.ng-valid.required {
+  background-color: #C2E6FE;
+}
+
+
