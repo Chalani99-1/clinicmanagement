@@ -32,9 +32,9 @@ import {Clinicattendence} from "../../../entity/clinicattendence";
   styleUrls: ['./clinic.component.css']
 })
 export class ClinicComponent implements OnInit{
-  columns: string[] = ['clinictype', 'ward', 'clinicroom', 'clinicstatus' , 'date','starttime','endtime','duration'];
-  headers: string[] = ['Clinic Type', 'Ward', 'Clinic Room', 'Clinic Status', 'Date','starttime','endtime','duration'];
-  binders: string[] = ['clinictype.name', 'ward.name', 'clinicroom.name', 'clinicstatus.name', 'getDate()','starttime','endtime','getDuration()'];
+  columns: string[] = ['clinictype', 'ward', 'clinicroom', 'clinicstatus' , 'date','starttime','endtime'];
+  headers: string[] = ['Clinic Type', 'Ward', 'Clinic Room', 'Clinic Status', 'Date','starttime','endtime'];
+  binders: string[] = ['clinictype.name', 'ward.name', 'clinicroom.name', 'clinicstatus.name', 'date','starttime','endtime'];
 
   cscolumns: string[] = ['csclinictype', 'csward', 'csclinicroom', 'csclinicstatus', 'csdate','csstarttime','csendtime'];
   csprompts: string[] = ['Search by Clinic Type', 'Search by Ward', 'Search by Clinic Room',
@@ -94,7 +94,6 @@ export class ClinicComponent implements OnInit{
       "csdate": new FormControl(),
       "csstarttime": new FormControl(),
       "csendtime": new FormControl(),
-      "csduration": new FormControl(),
 
     });
 
@@ -210,9 +209,14 @@ export class ClinicComponent implements OnInit{
 
   loadTable(query: string) {
 
+    // this.cs.getAll(query)
+    //   .then((clinics: Clinic[]) => {
+    //     this.clinics = clinics;
+    //     this.imageurl = 'assets/fullfilled.png';
+    //   })
     this.cs.getAll(query)
       .then((clinics: Clinic[]) => {
-        this.clinics = clinics;
+        this.clinics = clinics.reverse(); // Reverse the order
         this.imageurl = 'assets/fullfilled.png';
       })
       .catch((error) => {
