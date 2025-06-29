@@ -6,25 +6,17 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UiAssist} from "../../../util/ui/ui.assist";
 import {Prescriptionservice} from "../../../service/prescriptionservice";
-import {Clinictype} from "../../../entity/clinictype";
-import {Clinicroom} from "../../../entity/clinicroom";
-import {Ward} from "../../../entity/ward";
 import {Employee} from "../../../entity/employee";
-import {Clinicstatus} from "../../../entity/clinicstatus";
 import {DatePipe} from "@angular/common";
-import {Designation} from "../../../entity/designation";
 import {Prescriptionstatus} from "../../../entity/prescriptionstatus";
 import {Prescriptionstatusservice} from "../../../service/prescriptionstatusservice";
 import {Patient} from "../../../entity/patient";
 import {Patientservice} from "../../../service/patientservice";
 import {Patientattendence} from "../../../entity/patientattendence";
 import {Patientattendenceservice} from "../../../service/patientattendenceservice";
-import {Doctor} from "../../../entity/doctor";
-import {Doctorservice} from "../../../service/doctorservice";
 import {EmployeeService} from "../../../service/employeeservice";
 import {ConfirmComponent} from "../../../util/dialog/confirm/confirm.component";
 import {MatDialog} from "@angular/material/dialog";
-import {Investigation} from "../../../entity/investigation";
 import {Prescriptiondrug} from "../../../entity/prescriptiondrug";
 import {RegexService} from "../../../service/regexservice";
 import {MessageComponent} from "../../../util/dialog/message/message.component";
@@ -34,7 +26,6 @@ import {Drugshedule} from "../../../entity/drugshedule";
 import {Meal} from "../../../entity/meal";
 import {Drugsheduleservice} from "../../../service/drugsheduleservice";
 import {Mealservice} from "../../../service/mealservice";
-import {Doctordegree} from "../../../entity/doctordegree";
 
 @Component({
   selector: 'app-prescription',
@@ -92,6 +83,7 @@ export class PrescriptionComponent {
 
   changedPreDrugs: Array<Prescriptiondrug> = [];
   drugs:Array<Drug>=[];
+  filteredDrugs: Array<Drug> = [];
   drugshedules:Array<Drugshedule>=[];
   meals:Array<Meal>=[];
 
@@ -120,7 +112,6 @@ export class PrescriptionComponent {
     this.csearch = this.fb.group({
       "csdate": new FormControl(),
       "csprescriptionstatus": new FormControl(),
-      //"csclinictype": new FormControl(),
       "csemployee": new FormControl(),
       "cspatient" : new FormControl()
     });
@@ -191,7 +182,17 @@ export class PrescriptionComponent {
     });
 
     this.ds.getAll("").then((drugs: Drug[]) => {
+      // Store all drugs for other operations
       this.drugs = drugs;
+
+      // Create filtered list for dropdown (only active drugs)
+      this.filteredDrugs = drugs.filter(drug =>
+        drug.drugstatus?.id === 1 || drug.drugstatus?.id === 3
+      );
+
+      // Log both arrays for debugging
+      console.log('All drugs:', this.drugs);
+      console.log('Filtered drugs for dropdown:', this.filteredDrugs);
     });
 
   }
@@ -288,12 +289,6 @@ export class PrescriptionComponent {
 
   }
 
-
-  getPatient(element: Prescription) {
-    return element.patientattendence.patient.name + '(' + element.patientattendence.patient.nic + ')';
-
-  }
-
   filterTable(): void {
 
     const csearchdata = this.csearch.getRawValue();
@@ -309,11 +304,6 @@ export class PrescriptionComponent {
     this.data.filter = 'xx';
 
   }
-
-  getDate(ele:Prescription){
-    return this.dp.transform(new Date(ele.date),'yyyy-MM-dd')
-  }
-
 
   btnSearchMc(): void {
 
@@ -354,10 +344,6 @@ export class PrescriptionComponent {
         this.loadTable("");
       }
     });
-  }
-
-  getBtn(element: Prescriptiondrug) {
-    return `<button mat-raised-button>Remove</button>`;
   }
 
   id = 0;

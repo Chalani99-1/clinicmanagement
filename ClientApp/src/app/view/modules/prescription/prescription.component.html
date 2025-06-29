@@ -24,7 +24,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-              <mat-label>Description</mat-label>
+              <mat-label>Paramedical Only</mat-label>
               <input matInput formControlName="description">
             </mat-form-field>
 
@@ -37,7 +37,7 @@
               <mat-label>Drug</mat-label>
               <mat-select formControlName="drug">
                 <mat-option [value]="null" selected>Not Selected</mat-option>
-                <mat-option *ngFor="let drug of drugs" [value]="drug">{{drug.name}}</mat-option>
+                <mat-option *ngFor="let drug of filteredDrugs" [value]="drug">{{drug.name}}</mat-option>
               </mat-select>
             </mat-form-field>
 
