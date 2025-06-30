@@ -1,6 +1,7 @@
 package lk.earth.earthuniversity.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -10,6 +11,11 @@ public class Prescription {
     @Id
     @Column(name = "id")
     private Integer id;
+
+    @Basic
+    @Column(name = "description")
+    @Pattern(regexp = "^.*$", message = "Invalid Description")
+    private String description;
     @Basic
     @Column(name = "date")
     private Timestamp date;
@@ -41,6 +47,14 @@ public class Prescription {
         this.date = date;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,6 +64,7 @@ public class Prescription {
 
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
 
         return true;
     }

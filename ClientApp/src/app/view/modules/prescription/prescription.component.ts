@@ -124,6 +124,7 @@ export class PrescriptionComponent {
     });
 
     this.form = this.fb.group({
+      "description": new FormControl('', [Validators.required]),
       "date": new FormControl('', [Validators.required]),
       "patientattendence": new FormControl('', [Validators.required]),
       "prescriptionstatus": new FormControl('', [Validators.required]),
@@ -204,6 +205,7 @@ export class PrescriptionComponent {
   createForm() {
 
     this.form.controls['date'].setValidators([Validators.required]);
+    this.form.controls['description'].setValidators([Validators.required]);
     this.form.controls['patientattendence'].setValidators([Validators.required]);
     this.form.controls['prescriptionstatus'].setValidators([Validators.required]);
     this.form.controls['employee'].setValidators([Validators.required]);

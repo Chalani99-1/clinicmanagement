@@ -33,21 +33,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
-
             LoginRequest loginRequest = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
-
             User user = userService.getByUsername(loginRequest.getUsername());
+            String salt = user.getSalt();
+            String hashedPassword = "";
 
-                String salt = user.getSalt();
-                String hashedPassword = "";
-
-                if (salt != null){
-                     hashedPassword = salt + loginRequest.getPassword();
+            if (salt != null){hashedPassword = salt + loginRequest.getPassword();
                 }else {
                      hashedPassword =  loginRequest.getPassword();
                 }
 
-            Authentication auth = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken( loginRequest.getUsername(), hashedPassword ) );
+            Authentication auth = authenticationManager.authenticate
+                    ( new UsernamePasswordAuthenticationToken( loginRequest.getUsername(), hashedPassword ) );
 
             return auth;
 
@@ -60,7 +57,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)throws IOException, ServletException {
 
         UserDetails userDetails = (UserDetails) authResult.getPrincipal();
         String token = jwtTokenUtil.generateToken(userDetails);

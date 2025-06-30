@@ -51,7 +51,7 @@ public class ClinicController {
         HashMap<String,String> responce = new HashMap<>();
         String errors="";
 
-        //List<Clinic> extClinic = clinicdao.findByClinicByDate(clinic.getClinictype().getName(), clinic.getDate());
+         //List<Clinic> extClinic = clinicdao.findByClinicByDate(clinic.getClinictype().getName(), clinic.getDate());
         List<Clinic> extClinic = clinicdao.findByClinicByDate(clinic.getClinicroom().getName(),clinic.getDate(),clinic.getStarttime(),clinic.getEndtime());
 
         if (!extClinic.isEmpty()){

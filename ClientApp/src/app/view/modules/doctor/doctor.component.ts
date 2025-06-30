@@ -131,7 +131,7 @@ export class DoctorComponent {
       "employee": new FormControl('', [Validators.required]),
       "speciality": new FormControl('', [Validators.required]),
       "doctorgrade": new FormControl('', [Validators.required]),
-      "description": new FormControl,
+      "description": new FormControl('', [Validators.required]),
       "slmcregno": new FormControl('', [Validators.required]),
       "country": new FormControl('', [Validators.required]),
       "doslmcregisterd": new FormControl('', [Validators.required]),

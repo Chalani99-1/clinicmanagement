@@ -22,7 +22,7 @@ public class Patient {
     private String name;
     @Basic
     @Column(name = "dob")
-   // @Pattern(regexp ="^\\d{4}/\\d{2}/\\d{2}$",message = "Invalid Date Format")
+    @Pattern(regexp ="^\\d{4}/\\d{2}/\\d{2}$",message = "Invalid Date Format")
     private Date dob;
     @Basic
     @Column(name = "nic")

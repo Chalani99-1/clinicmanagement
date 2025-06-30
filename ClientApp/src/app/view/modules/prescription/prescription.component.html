@@ -16,6 +16,11 @@
           </mat-form-field>
         </mat-form>
 
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description">
+        </mat-form-field>
+
         <div id="innertable">
           <form #myInnerForm [formGroup]="innerform">
             <mat-form-field appearance="outline">
