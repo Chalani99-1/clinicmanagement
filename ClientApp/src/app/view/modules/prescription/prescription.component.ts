@@ -1,7 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {Prescription} from "../../../entity/prescription";
-import {Clinic} from "../../../entity/clinic";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {UiAssist} from "../../../util/ui/ui.assist";
@@ -84,6 +83,7 @@ export class PrescriptionComponent {
   changedPreDrugs: Array<Prescriptiondrug> = [];
   drugs:Array<Drug>=[];
   filteredDrugs: Array<Drug> = [];
+  ss: Array<Drug> = [];
   drugshedules:Array<Drugshedule>=[];
   meals:Array<Meal>=[];
 
@@ -200,6 +200,15 @@ export class PrescriptionComponent {
   createView() {
     this.imageurl = 'assets/pending.gif';
     this.loadTable("");
+  }
+
+  getDate(ele:Prescription){
+    return this.dp.transform(new Date(ele.date),'yyyy-MM-dd')
+  }
+
+  getPatient(element: Prescription) {
+    return element.patientattendence.patient.name + '(' + element.patientattendence.patient.nic + ')';
+
   }
 
   createForm() {
@@ -427,6 +436,8 @@ export class PrescriptionComponent {
   }
 
   fillForm(prescription: Prescription) {
+    
+    this.filteredDrugs = this.drugs;
 
     this.enableButtons(false, true, true);
 
