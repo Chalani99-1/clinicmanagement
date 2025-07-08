@@ -124,12 +124,11 @@ export class PrescriptionComponent {
     });
 
     this.form = this.fb.group({
-      "description": new FormControl('', [Validators.required]),
-      "date": new FormControl('', [Validators.required]),
+      "description": new FormControl('', []),
+      "date": new FormControl(new Date(), [Validators.required]), // Set today's date as default
       "patientattendence": new FormControl('', [Validators.required]),
       "prescriptionstatus": new FormControl('', [Validators.required]),
       "employee": new FormControl('', [Validators.required]),
-
     });
 
     this.innerform = this.fb.group({
@@ -214,11 +213,11 @@ export class PrescriptionComponent {
   createForm() {
 
     this.form.controls['date'].setValidators([Validators.required]);
-    this.form.controls['description'].setValidators([Validators.required]);
+    this.form.controls['description'].setValidators([]);
     this.form.controls['patientattendence'].setValidators([Validators.required]);
     this.form.controls['prescriptionstatus'].setValidators([Validators.required]);
     this.form.controls['employee'].setValidators([Validators.required]);
-    this.form.controls['date'].setValidators([Validators.required]);
+    this.form.controls['date'].setValue(new Date());
 
     this.innerform.controls['dose'].setValidators([Validators.required]);
     this.innerform.controls['description'].setValidators([Validators.required]);
@@ -436,7 +435,7 @@ export class PrescriptionComponent {
   }
 
   fillForm(prescription: Prescription) {
-    
+
     this.filteredDrugs = this.drugs;
 
     this.enableButtons(false, true, true);
@@ -508,7 +507,7 @@ export class PrescriptionComponent {
     confirm.afterClosed().subscribe(async result => {
       if (result) {
         this.resetForms();
-
+        this.form.controls['date'].setValue(new Date());
       }
     });
   }
@@ -522,6 +521,7 @@ export class PrescriptionComponent {
 
     this.createForm();
     this.form.controls['date'].setValue(new Date());
+
     this.selectedrow = null;
     // @ts-ignore
     this.prescription = null;
@@ -562,7 +562,7 @@ export class PrescriptionComponent {
 
       let invdata: string = "";
 
-      // invdata = invdata + "<br>Prescribed Date is : " + this.prescription.date
+      invdata = invdata + "<br>Prescribed Description is : " + this.prescription.description
       // invdata = invdata + "<br>Patient name is : " + this.prescription.patientattendence.employee.callingname;
 
       const confirm = this.dg.open(ConfirmComponent, {
@@ -598,6 +598,7 @@ export class PrescriptionComponent {
 
             if (addstatus) {
               addmessage = "Successfully Saved";
+              this.printThirdPartyMedicines();
               this.form.reset();
               this.innerdata = [];
               Object.values(this.form.controls).forEach(control => {
@@ -783,5 +784,180 @@ export class PrescriptionComponent {
 
   updatePresDrugs(element: Prescriptiondrug) {
     this.changedPreDrugs.push(element);
+  }
+
+  printThirdPartyMedicines(): void {
+    if (!this.prescription) {
+      const errmsg = this.dg.open(MessageComponent, {
+        width: '500px',
+        data: {heading: "Error - Print Third Party Medicines", message: "Please select a prescription first"}
+      });
+      return;
+    }
+
+    // Get third party medicines from description
+    const description = this.prescription.description || '';
+    const patientName = this.prescription.patientattendence?.patient?.name || 'N/A';
+    const patientNIC = this.prescription.patientattendence?.patient?.nic || 'N/A';
+    const doctorName = this.prescription.employee?.fullname || 'N/A';
+    const prescriptionDate = this.getDate(this.prescription) || 'N/A';
+
+    // Create HTML content for printing
+    const printContent = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Third Party Medicine Prescription</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+                line-height: 1.6;
+            }
+            .header {
+                text-align: center;
+                border-bottom: 2px solid #333;
+                padding-bottom: 20px;
+                margin-bottom: 20px;
+            }
+            .hospital-name {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2c5aa0;
+                margin-bottom: 5px;
+            }
+            .subtitle {
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 10px;
+            }
+            .info-section {
+                margin-bottom: 20px;
+            }
+            .info-row {
+                display: flex;
+                margin-bottom: 10px;
+            }
+            .info-label {
+                font-weight: bold;
+                width: 150px;
+                color: #333;
+            }
+            .info-value {
+                color: #555;
+            }
+            .description-section {
+                margin-top: 30px;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .description-title {
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 15px;
+                border-bottom: 1px solid #ccc;
+                padding-bottom: 5px;
+            }
+            .description-content {
+                font-size: 14px;
+                line-height: 1.8;
+                color: #444;
+                white-space: pre-wrap;
+            }
+            .footer {
+                margin-top: 40px;
+                text-align: center;
+                font-size: 12px;
+                color: #666;
+                border-top: 1px solid #ddd;
+                padding-top: 20px;
+            }
+            .note {
+                margin-top: 30px;
+                padding: 10px;
+                background-color: #fff3cd;
+                border: 1px solid #ffeaa7;
+                border-radius: 5px;
+                font-size: 14px;
+                color: #856404;
+            }
+            @media print {
+                body {
+                    margin: 0;
+                }
+                .no-print {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div class="hospital-name">POLONNARUWA HOSPITAL</div>
+            <div class="subtitle">Third Party Medicine Prescription</div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <div class="info-label">Date:</div>
+                <div class="info-value">${prescriptionDate}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Patient Name:</div>
+                <div class="info-value">${patientName}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Patient NIC:</div>
+                <div class="info-value">${patientNIC}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Doctor Name:</div>
+                <div class="info-value">${doctorName}</div>
+            </div>
+        </div>
+
+        <div class="description-section">
+            <div class="description-title">Third Party Medicines to Purchase:</div>
+            <div class="description-content">${description}</div>
+        </div>
+
+        <div class="note">
+            <strong>Note:</strong> Please purchase these medicines from authorized pharmacies.
+            Keep the receipts for your records. Consult your doctor if you have any questions about dosage or usage.
+        </div>
+
+        <div class="footer">
+            <p>Polonnaruwa Hospital - Third Party Medicine Prescription</p>
+            <p>Generated on: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+        </div>
+    </body>
+    </html>
+  `;
+
+    // Create new window and print
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+
+    if (printWindow) {
+      printWindow.document.open();
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+
+      // Wait for content to load, then print
+      printWindow.onload = function() {
+        printWindow.print();
+        // Optional: Close window after printing
+        printWindow.onafterprint = function() {
+          printWindow.close();
+        };
+      };
+    } else {
+      const errmsg = this.dg.open(MessageComponent, {
+        width: '500px',
+        data: {heading: "Error - Print", message: "Unable to open print window. Please check your browser's popup settings."}
+      });
+    }
   }
 }

@@ -14,7 +14,6 @@ public class Prescription {
 
     @Basic
     @Column(name = "description")
-    @Pattern(regexp = "^.*$", message = "Invalid Description")
     private String description;
     @Basic
     @Column(name = "date")
