@@ -194,7 +194,7 @@ export class InvestigationComponent {
 
     this.is.getAll(query)
       .then((investigations: Investigation[]) => {
-        this.investigations = investigations;
+        this.investigations = investigations.reverse();
         this.imageurl = 'assets/fullfilled.png';
       })
       .catch((error) => {

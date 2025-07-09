@@ -25,6 +25,7 @@ import {Drugshedule} from "../../../entity/drugshedule";
 import {Meal} from "../../../entity/meal";
 import {Drugsheduleservice} from "../../../service/drugsheduleservice";
 import {Mealservice} from "../../../service/mealservice";
+import {Clinic} from "../../../entity/clinic";
 
 @Component({
   selector: 'app-prescription',
@@ -284,9 +285,14 @@ export class PrescriptionComponent {
 
     this.ps.getAll(query)
       .then((prescriptions: Prescription[]) => {
-        this.prescriptions = prescriptions;
+        this.prescriptions = prescriptions.reverse();
         this.imageurl = 'assets/fullfilled.png';
       })
+    // this.cs.getAll(query)
+    //   .then((clinics: Clinic[]) => {
+    //     this.clinics = clinics.reverse(); // Reverse the order
+    //     this.imageurl = 'assets/fullfilled.png';
+    //   })
       .catch((error) => {
         console.log(error);
         this.imageurl = 'assets/rejected.png';

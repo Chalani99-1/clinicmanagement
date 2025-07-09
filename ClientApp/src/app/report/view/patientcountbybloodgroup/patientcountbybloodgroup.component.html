@@ -31,6 +31,18 @@
 
   <mat-grid-tile [colspan]="1" [rowspan]="2">
 
+      <mat-card>
+        <mat-card-header><mat-card-title>Pie Chat View</mat-card-title></mat-card-header>
+        <mat-card-content><div #piechart></div></mat-card-content>
+      </mat-card>
+
+
+      <mat-card>
+        <mat-card-header><mat-card-title>Line Chart View</mat-card-title></mat-card-header>
+        <mat-card-content><div #linechart></div></mat-card-content>
+      </mat-card>
+
+    </mat-grid-tile>
 <!--    <mat-card>-->
 <!--      <mat-card-header><mat-card-title>Pie Chat View of Doctors Count By Speciality</mat-card-title></mat-card-header>-->
 <!--      <mat-card-content><div #piechart></div></mat-card-content>-->
@@ -41,8 +53,6 @@
 <!--      <mat-card-header><mat-card-title>Line Chart View of Doctors Count By Speciality</mat-card-title></mat-card-header>-->
 <!--      <mat-card-content><div #linechart></div></mat-card-content>-->
 <!--    </mat-card>-->
-
-  </mat-grid-tile>
 
 
 </mat-grid-list>

@@ -15,7 +15,7 @@ declare var google: any;
   templateUrl: './patientcountbybloodgroup.component.html',
   styleUrls: ['./patientcountbybloodgroup.component.css']
 })
-export class PatientcountbybloodgroupComponent implements OnInit{
+export class PatientcountbybloodgroupComponent implements OnInit {
   patientcountbybloodgroups!: PatientCountByBloodgroup[];
   data!: MatTableDataSource<PatientCountByBloodgroup>;
 
@@ -24,15 +24,18 @@ export class PatientcountbybloodgroupComponent implements OnInit{
   binders: string[] = ['name', 'count'];
 
   @ViewChild('barchart', {static: false}) barchart: any;
-  patients : Array<Patient>=[];
-  bloodgroups:Array<Bloodgroup>=[];
+  @ViewChild('piechart', {static: false}) piechart: any;
+  @ViewChild('linechart', {static: false}) linechart: any;
+  patients: Array<Patient> = [];
+  bloodgroups: Array<Bloodgroup> = [];
 
   public form!: FormGroup;
   patientCountByBloodgroup!: PatientCountByBloodgroup[];
+
   constructor(private rs: ReportService,
-              private fb:FormBuilder,
+              private fb: FormBuilder,
               private snackBar: MatSnackBar,
-              private bs:Bloodgroupservice,
+              private bs: Bloodgroupservice,
               private ps: Patientservice) {
   }
 
@@ -63,8 +66,18 @@ export class PatientcountbybloodgroupComponent implements OnInit{
     barData.addColumn('string', 'name');
     barData.addColumn('number', 'Count');
 
+    const pieData = new google.visualization.DataTable();
+    pieData.addColumn('string', 'name');
+    pieData.addColumn('number', 'Count');
+
+    const lineData = new google.visualization.DataTable();
+    lineData.addColumn('string', 'name');
+    lineData.addColumn('number', 'Count');
+
     this.patientcountbybloodgroups.forEach((bld: PatientCountByBloodgroup) => {
       barData.addRow([bld.name, bld.count]);
+      pieData.addRow([bld.name, bld.count]);
+      lineData.addRow([bld.name, bld.count]);
     });
 
     const barOptions = {
@@ -75,7 +88,25 @@ export class PatientcountbybloodgroupComponent implements OnInit{
       width: 600
     };
 
+    const pieOptions = {
+      title: 'Bloodgroup Count (Pie Chart)',
+      height: 400,
+      width: 550
+    };
+
+    const lineOptions = {
+      title: 'Bloodgroup Count (Line Chart)',
+      height: 400,
+      width: 600
+    };
+
     const barChart = new google.visualization.BarChart(this.barchart.nativeElement);
     barChart.draw(barData, barOptions);
+
+    const pieChart = new google.visualization.PieChart(this.piechart.nativeElement);
+    pieChart.draw(pieData, pieOptions);
+
+    const lineChart = new google.visualization.LineChart(this.linechart.nativeElement);
+    lineChart.draw(lineData, lineOptions);
   }
 }

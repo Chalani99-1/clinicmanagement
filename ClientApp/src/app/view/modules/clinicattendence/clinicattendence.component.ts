@@ -172,7 +172,7 @@ export class ClinicattendenceComponent {
 
     this.cas.getAll(query)
       .then((clncattends: Clinicattendence[]) => {
-        this.clinicattendences = clncattends;
+        this.clinicattendences = clncattends.reverse();
         this.imageurl = 'assets/fullfilled.png';
       })
       .catch((error) => {

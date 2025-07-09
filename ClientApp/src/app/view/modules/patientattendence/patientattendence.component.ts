@@ -200,7 +200,7 @@ export class PatientattendenceComponent  {
 
     this.pas.getAll(query)
         .then((pntattends: Patientattendence[]) => {
-          this.patientattendences = pntattends;
+          this.patientattendences = pntattends.reverse();
           this.imageurl = 'assets/fullfilled.png';
         })
         .catch((error) => {
