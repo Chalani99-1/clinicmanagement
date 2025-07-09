@@ -298,7 +298,6 @@ export class PatientattendenceComponent  {
           (cserchdata.cstimein == null || patientattendence.timein.includes(cserchdata.cstimein)) &&
           (cserchdata.cstimeout == null || patientattendence.timeout.toString().includes(cserchdata.cstimeout)) &&
           (cserchdata.csemployee == null || patientattendence.employee.fullname.includes(cserchdata.csemployee))
-
     };
 
     this.data.filter = 'xx';

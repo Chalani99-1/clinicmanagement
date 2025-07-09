@@ -245,12 +245,12 @@ export class EmployeeComponent {
     const cserchdata = this.csearch.getRawValue();
 
     this.data.filterPredicate = (employee: Employee, filter: string) => {
-      return (cserchdata.csnumber == null || employee.number.toLowerCase().includes(cserchdata.csnumber)) &&
-        (cserchdata.cscallingname == null || employee.callingname.toLowerCase().includes(cserchdata.cscallingname)) &&
-        (cserchdata.csgender == null || employee.gender.name.toLowerCase().includes(cserchdata.csgender)) &&
-        (cserchdata.csdesignation == null || employee.designation.name.toLowerCase().includes(cserchdata.csdesignation)) &&
-        (cserchdata.csname == null || employee.fullname.toLowerCase().includes(cserchdata.csname)) &&
-        (cserchdata.csmodi == null || this.getModi(employee).toLowerCase().includes(cserchdata.csmodi));
+      return (cserchdata.csnumber == null || employee.number.includes(cserchdata.csnumber)) &&
+        (cserchdata.cscallingname == null || employee.callingname.includes(cserchdata.cscallingname)) &&
+        (cserchdata.csgender == null || employee.gender.name.includes(cserchdata.csgender)) &&
+        (cserchdata.csdesignation == null || employee.designation.name.includes(cserchdata.csdesignation)) &&
+        (cserchdata.csname == null || employee.fullname.includes(cserchdata.csname)) &&
+        (cserchdata.csmodi == null || this.getModi(employee).includes(cserchdata.csmodi));
     };
 
     this.data.filter = 'xx';

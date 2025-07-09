@@ -64,13 +64,13 @@ export class PatientComponent implements OnInit {
   @ViewChild('availablelist') availablelist!: MatSelectionList;
   @ViewChild('selectedlist') selectedlist!: MatSelectionList;
 
-  columns: string[] = ['regno','name', 'patientstatus', 'contactnumber', 'dob', 'bloodgroup'];
-  headers: string[] = ['Reg No','Name', 'patientstatus', 'Mobile', 'Birth Date', 'Bloodgroup'];
-  binders: string[] = ['regno','name', 'patientstatus.name', 'contactnumber', 'dob', 'bloodgroup.name'];
+  columns: string[] = ['regno','name', 'patientstatus', 'contactnumber', 'dob', 'nic'];
+  headers: string[] = ['Reg No','Name', 'patientstatus', 'Mobile', 'Birth Date', 'nic'];
+  binders: string[] = ['regno','name', 'patientstatus.name', 'contactnumber', 'dob', 'nic'];
 
-  cscolumns: string[] = ['csregno','csname', 'cspatientstatus', 'cscontactnumber', 'csdob', 'csbloodgroup'];
+  cscolumns: string[] = ['csregno','csname', 'cspatientstatus', 'cscontactnumber', 'csdob', 'csnic'];
   csprompts: string[] = ['Search by Name','Search by Name', 'Search by Patient status', 'Search By Mobile',
-    'Search by Birth Date', 'Search by bloodgroup'];
+    'Search by Birth Date', 'Search by NIC'];
 
 
   imageurl: string = '';
@@ -114,7 +114,7 @@ export class PatientComponent implements OnInit {
       'cspatientstatus': new FormControl(),
       'cscontactnumber': new FormControl(),
       'csdob': new FormControl(),
-      'csbloodgroup': new FormControl(),
+      'csnic': new FormControl(),
       'csmodi': new FormControl()
 
     });
@@ -344,7 +344,7 @@ export class PatientComponent implements OnInit {
         (cssearchdata.cspatientstatus == null || patient.patientstatus.name.includes(cssearchdata.cspatientstatus)) &&
         (cssearchdata.cscontactnumber == null || patient.contactnumber.includes(cssearchdata.cscontactnumber)) &&
         (cssearchdata.csdob == null || patient.dob.includes(cssearchdata.csdob)) &&
-        (cssearchdata.csbloodgroup == null || patient.bloodgroup.name.includes(cssearchdata.csbloodgroup)) &&
+        (cssearchdata.csnic == null || patient.nic.includes(cssearchdata.csnic)) &&
         (cssearchdata.csmodi == null || this.getModi(patient).includes(cssearchdata.csmodi));
     });
     this.data.filter = 'xx';
