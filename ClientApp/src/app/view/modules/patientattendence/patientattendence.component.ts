@@ -272,8 +272,8 @@ export class PatientattendenceComponent  {
 
     //@ts-ignore
     this.patientattendence.employee = this.employees.find(e => e.id === this.patientattendence.employee.id);
-
-
+//@ts-ignore
+    this.patientattendence.clinic = this.clinics.find(c=> c.id ===this.patientattendence.clinic.id);
     //@ts-ignore
     this.patientattendence.patientattendencestatus = this.patientattendencestatuses.find(ps => ps.id === this.patientattendence.patientattendencestatus.id);
 
