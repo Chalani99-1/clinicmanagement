@@ -208,6 +208,7 @@ export class DoctorComponent {
 
     for (const controlName in this.form.controls) {
       const control = this.form.controls[controlName];
+      control.markAsUntouched();
       control.valueChanges.subscribe(value => {
         //@ts-ignore
         if (controlName == "year")
@@ -231,6 +232,7 @@ export class DoctorComponent {
 
     for (const controlName in this.innerform.controls) {
       const control = this.innerform.controls[controlName];
+      control.markAsUntouched();
       control.valueChanges.subscribe(value => {
           // @ts-ignore
           if (this.oldgrn != undefined && control.valid) {

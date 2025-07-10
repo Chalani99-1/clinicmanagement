@@ -157,6 +157,7 @@ export class WardassignmentComponent {
 
     for (const controlName in this.form.controls) {
       const control = this.form.controls[controlName];
+      control.markAsUntouched();
       control.valueChanges.subscribe(value => {
         //@ts-ignore
         if (controlName == "assignmentdate" || controlName == "resignateddate")
