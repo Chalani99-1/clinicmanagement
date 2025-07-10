@@ -18,6 +18,10 @@ public class Brand {
     @OneToMany(mappedBy = "brand")
     private Collection<Drug> drugs;
 
+    @ManyToOne
+    @JoinColumn(name = "generic_id", referencedColumnName = "id", nullable = false)
+    private Generic generic;
+
     public Integer getId() {
         return id;
     }
@@ -32,6 +36,14 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Generic getGeneric() {
+        return generic;
+    }
+
+    public void setGenericy(Generic generic) {
+        this.generic = generic;
     }
 
     @Override

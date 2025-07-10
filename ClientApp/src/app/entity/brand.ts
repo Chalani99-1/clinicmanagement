@@ -1,8 +1,10 @@
+import {Generic} from "./generic";
 
 export class Brand{
 
   public id !: number;
   public name !: string;
+  public generic!:Generic
 
   constructor(id:number,name:string) {
     this.id=id;

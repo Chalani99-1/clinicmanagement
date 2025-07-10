@@ -55,6 +55,9 @@ export class DrugComponent  {
   csprompts: string[] = ['Search by Code','Search by Name','Search by Brand',
     'Search by Drug Status','Search by Quantity'];
 
+
+  productionordersubscription: any;
+
   public csearch!: FormGroup;
   public ssearch!: FormGroup;
   public form!: FormGroup;
@@ -312,6 +315,7 @@ export class DrugComponent  {
     }
 
     this.enableButtons(true,false,false);
+    this.filterBrand()
   }
 
   enableButtons(add:boolean, upd:boolean, del:boolean){
@@ -319,7 +323,18 @@ export class DrugComponent  {
     this.enaupd=upd;
     this.enadel=del;
   }
+  filterBrand(){
+    if (this.productionordersubscription) {
+      this.productionordersubscription.unsubscribe();
+    }
+    this.productionordersubscription = this.form.get("generic")?.valueChanges.subscribe((g: Generic) => {
+      if (g) {
+        console.log(g)
+        this.brands = g.brands.filter((b:Brand) => b.generic.id === g.id);
 
+      }
+    });
+  }
 
   selectImage(e: any): void {
     if (e.target.files) {
