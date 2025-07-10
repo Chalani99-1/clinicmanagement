@@ -36,10 +36,10 @@
 
 
           <div id="butpanel">
-            <button mat-raised-button (click)="add()" [disabled]="!authService.getEnaAdd()">Add</button>
+            <button mat-raised-button (click)="add()" >Add</button>
             <button mat-raised-button>Clear</button>
-            <button mat-raised-button (click)="update()" [disabled]="!authService.getEnaUpd()">Update</button>
-            <button mat-raised-button (click)="delete()" [disabled]="!authService.getEnaDel()">Delete</button>
+            <button mat-raised-button (click)="update()" >Update</button>
+            <button mat-raised-button (click)="delete()" >Delete</button>
           </div>
 
         </mat-form>
