@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PickerInteractionMode } from 'igniteui-angular';
-import { ReportService } from '../../reportservice';
-import { PatientByClinicByTime } from '../../entity/patientbyclinicbytime';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {PickerInteractionMode} from 'igniteui-angular';
+import {ReportService} from '../../reportservice';
+import {PatientByClinicByTime} from '../../entity/patientbyclinicbytime';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {DatePipe} from '@angular/common';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 declare var google: any;
 
@@ -15,40 +16,56 @@ declare var google: any;
 export class PatientcountbyclinicbytimeComponent implements OnInit {
 
   patientByClinicByTime!: PatientByClinicByTime[];
-  @ViewChild('patientbarchart', { static: false }) patientbarchart: any;
-  @ViewChild('patientsteppedhart', { static: false }) patientsteppedhart: any;
+  @ViewChild('patientbarchart', {static: false}) patientbarchart: any;
+  @ViewChild('patientsteppedhart', {static: false}) patientsteppedhart: any;
   public mode: PickerInteractionMode = PickerInteractionMode.DropDown;
   public format = 'hh:mm:ss tt';
   public sdate: Date = new Date();
   public edate: Date = new Date();
+  public form!: FormGroup;
 
   constructor(
     private rs: ReportService,
     private snackBar: MatSnackBar,
-    private dp: DatePipe
-  ) { }
+    private dp: DatePipe,
+    private fb: FormBuilder
+  ) {
 
-  ngOnInit() { }
+    this.form = this.fb.group({
+      "startdate": new FormControl('', [Validators.required]),
+      "enddate": new FormControl('', [Validators.required]),
 
-  getStTimeandEdTime() {
-    let stime = this.dp.transform(this.sdate, 'hh:mm:ss');
-    let etime = this.dp.transform(this.edate, 'hh:mm:ss');
-    console.log(stime, etime);
+    }, {updateOn: 'change'});
+
+  }
+
+  ngOnInit() {
+  }
+
+  search() {
+    const clisearchdata = this.form.getRawValue();
+    let startdate = clisearchdata.startdate;
+    let enddate = clisearchdata.enddate;
+    let sdate = this.dp.transform(startdate, 'yyyy-MM-dd');
+    let edate = this.dp.transform(enddate, 'yyyy-MM-dd');
+
+    // console.log(stime, etime);
     let query = "";
 
-    if (stime) query += "stime=" + stime + "&";
-    if (etime) query += "etime=" + etime + "&";
+    if (sdate) query += "startdate=" + sdate + "&";
+    if (edate) query += "enddate=" + edate + "&";
 
     if (query.endsWith("&")) query = query.slice(0, -1);
     if (query) query = "?" + query;
 
-    console.log(query);
+    // console.log(query);
     this.generateChart(query);
   }
 
-  generateChart(query: string) {
+  generateChart(query: string
+  ) {
     this.rs.getPatientByClinicByTime(query).then((patients: PatientByClinicByTime[]) => {
-      console.log(patients); // Log the patients data
+      // console.log(patients); // Log the patients data
       this.patientByClinicByTime = patients;
       this.loadCharts();
     }).catch((error) => {
@@ -59,13 +76,19 @@ export class PatientcountbyclinicbytimeComponent implements OnInit {
     });
   }
 
-  loadCharts(): void {
-    google.charts.load('current', { packages: ['corechart'] });
+  loadCharts()
+    :
+    void {
+    google.charts.load('current', {packages: ['corechart']});
     google.charts.setOnLoadCallback(this.drawCharts.bind(this));
   }
 
-  drawCharts(): void {
-    if (!this.patientByClinicByTime || this.patientByClinicByTime.length === 0) {
+  drawCharts()
+    :
+    void {
+    if (!
+      this.patientByClinicByTime || this.patientByClinicByTime.length === 0
+    ) {
       this.snackBar.open('No data available to draw charts.', 'Close', {
         duration: 5000,
       });
@@ -99,7 +122,7 @@ export class PatientcountbyclinicbytimeComponent implements OnInit {
 
     const steppedoptions = {
       title: 'Patient Count by Clinic (Stepped Area Chart)',
-      vAxis: { title: 'Number of Patients' },
+      vAxis: {title: 'Number of Patients'},
       isStacked: true,
       height: 400,
       width: 600

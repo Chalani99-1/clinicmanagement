@@ -39,7 +39,7 @@ export class AuthorizationManager {
   ];
 
   hospitalMenuItems =[
-    {name: 'Clinic Shedule',accessFlag:true,routerLink: 'clinic'},
+    {name: 'Clinic Schedule',accessFlag:true,routerLink: 'clinic'},
     {name: 'Clinic Attendence',accessFlag:true,routerLink: 'clinicattendence'},
     { name: 'Ward Assignment', accessFlag: true, routerLink: 'wardassignment' },
     { name: 'Patient Attendence', accessFlag: true, routerLink: 'patientattendence' },
@@ -134,7 +134,7 @@ export class AuthorizationManager {
           const [module, operation] = authority.split('-');
           return { module, operation };
         });
-        console.log(authorities);
+        // console.log(authorities);
 
         this.enableButtons(authorities);
         this.enableMenues(authorities);

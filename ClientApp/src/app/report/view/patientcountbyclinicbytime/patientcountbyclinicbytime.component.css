@@ -8,3 +8,14 @@ mat-card-header { background:  #24A49B; font-weight: bold ;color:white; border-t
   top: 5px;
   left: 15px;
 }
+
+mat-form-field{
+  width:300px !important;
+}
+
+#my-form{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+
+}

@@ -17,6 +17,9 @@ public class Generic {
     @JsonIgnore
     @OneToMany(mappedBy = "generic")
     private Collection<Drug> drugs;
+    @JsonIgnore
+    @OneToMany(mappedBy = "generic")
+    private Collection<Brand> brands;
 
     public Integer getId() {
         return id;
@@ -32,6 +35,23 @@ public class Generic {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<Brand> getBrands() {
+        return brands;
+    }
+
+    public void setBrands(Collection<Brand> brands) {
+        this.brands = brands;
+    }
+
+    @Override
+    public String toString() {
+        return "Generic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", drugs=" + drugs +
+                '}';
     }
 
     @Override

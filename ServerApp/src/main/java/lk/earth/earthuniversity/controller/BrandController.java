@@ -25,9 +25,13 @@ public class BrandController {
         List<Brand> brands = this.branddao.findAll();
 
         brands = brands.stream().map(
-                brand -> { Brand b = new Brand();
+                brand -> {
+
+                    Brand b = new Brand();
                             b.setId(brand.getId());
                             b.setName(brand.getName());
+                            b.setGeneric(brand.getGeneric());
+
                             return b; }
         ).collect(Collectors.toList());
 

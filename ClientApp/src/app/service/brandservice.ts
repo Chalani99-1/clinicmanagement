@@ -17,6 +17,7 @@ export class Brandservice {
     if(brands == undefined){
       return [];
     }
+    // console.log(brands)
     return brands;
   }
 

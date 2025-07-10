@@ -6,15 +6,19 @@ import lk.earth.earthuniversity.report.dao.*;
 import lk.earth.earthuniversity.report.entity.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 @CrossOrigin
 @RestController
@@ -52,7 +56,7 @@ public class ReportController {
     private DrugDao drugDao;
 
 
-    @GetMapping(path ="/countbydesignation",produces = "application/json")
+    @GetMapping(path = "/countbydesignation", produces = "application/json")
     public List<CountByDesignation> get() {
 
         List<CountByDesignation> designations = this.countbydesignaitondao.countByDesignation();
@@ -73,8 +77,7 @@ public class ReportController {
     }
 
 
-
-    @GetMapping(path ="/patientcountbybloodgroup",produces = "application/json")
+    @GetMapping(path = "/patientcountbybloodgroup", produces = "application/json")
     public List<PatientCountByBloodgroup> getCountByBloodgroup() {
 
         List<PatientCountByBloodgroup> patientCountByBloodgroups = this.patientcountbybloodgroupdao.countByBloodgroup();
@@ -88,7 +91,7 @@ public class ReportController {
     }
 
 
-    @GetMapping(path ="/doctorcountbyspeciality",produces = "application/json")
+    @GetMapping(path = "/doctorcountbyspeciality", produces = "application/json")
     public List<DoctorCountBySpeciality> getCountBySpeciality() {
 
         //        long totalCount = 0;
@@ -100,53 +103,68 @@ public class ReportController {
         return this.doctorcountbyspecialitydao.countBySpeciality();
     }
 
-    @GetMapping(path ="/doctorscount",produces = "application/json")
-    public Integer getCountByDoctor(){
+    @GetMapping(path = "/doctorscount", produces = "application/json")
+    public Integer getCountByDoctor() {
         return this.countAllDoctorDao.countAllByDoctors();
     }
 
-    @GetMapping(path ="/scheduledclinics",produces = "application/json")
-    public Integer getScheduledClinic(){
+    @GetMapping(path = "/scheduledclinics", produces = "application/json")
+    public Integer getScheduledClinic() {
         return this.countAllClinicByStsDao.countAllScheduledClinic();
     }
 
-    @GetMapping(path ="/cacelledclinics",produces = "application/json")
-    public Integer getCacelledClinic(){
+    @GetMapping(path = "/cacelledclinics", produces = "application/json")
+    public Integer getCacelledClinic() {
         return this.countAllClinicByStsDao.countAllCancelledClinic();
     }
 
-    @GetMapping(path ="/admittedpatients",produces = "application/json")
-    public Integer getAdmittedPatients(){
+    @GetMapping(path = "/admittedpatients", produces = "application/json")
+    public Integer getAdmittedPatients() {
         return this.countAllPatientByStsDao.countAllAdmittedPatient();
     }
 
-    @GetMapping(path ="/criticalpatients",produces = "application/json")
-    public Integer getCriticalPatients(){
+    @GetMapping(path = "/criticalpatients", produces = "application/json")
+    public Integer getCriticalPatients() {
         return this.countAllPatientByStsDao.countAllCriticalPatient();
     }
 
-    @GetMapping(path ="/inprogressinvestigations",produces = "application/json")
-    public Integer getInProgressInvestigations(){
+    @GetMapping(path = "/inprogressinvestigations", produces = "application/json")
+    public Integer getInProgressInvestigations() {
         return this.countAllinvestigationByStsDao.countAllinProgressInvestigations();
     }
 
-    @GetMapping(path ="/drugsbybrandandstatus",produces = "application/json")
-    public List<DrugCountByBrandAndSts> getDrugsByBrandAndSts(){
+    @GetMapping(path = "/drugsbybrandandstatus", produces = "application/json")
+    public List<DrugCountByBrandAndSts> getDrugsByBrandAndSts() {
         return this.countAllDrugByBrandAndStsDao.getAllDrugByBrandAndSts();
     }
 
-    @GetMapping(path ="/patientbyclinics",produces = "application/json")
-    public List<PatientCountByClinic> getPatientCountyClinics(){
+    @GetMapping(path = "/patientbyclinics", produces = "application/json")
+    public List<PatientCountByClinic> getPatientCountyClinics() {
         return this.countAllPatientByClinicDao.getAllPatientByClinic();
     }
 
     @GetMapping(path = "/patientbyclinicbytime", produces = "application/json")
-    public List<PatientCountByClinic> getAllPatientByClinicByTime(Time stime, Time etime) {
-        List<PatientCountByClinic> results = countAllPatientByClinicDao.getAllPatientByClinicByTime(stime, etime);
-        for (PatientCountByClinic result : results) {
-            result.setStime(stime);
-            result.setEtime(etime);
+    public List<PatientCountByClinic> getAllPatientByClinicByTime(
+            @RequestParam String startdate, @RequestParam String enddate) {
+        Timestamp startTimestamp;
+        Timestamp endTimestamp;
+        try {
+            System.out.println(startdate +" " +enddate);
+//            startdate ="2025-05-12";
+//            enddate ="2025-12-12";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date start = dateFormat.parse(startdate);
+            Date end = dateFormat.parse(enddate);
+
+            startTimestamp = new Timestamp(start.getTime());
+            endTimestamp = new Timestamp(end.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
         }
+
+        List<PatientCountByClinic> results = countAllPatientByClinicDao.getAllPatientByClinicByTime(startTimestamp, endTimestamp);
+
         return results;
     }
 

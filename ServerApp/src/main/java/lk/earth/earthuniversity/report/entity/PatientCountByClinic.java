@@ -11,15 +11,24 @@ public class PatientCountByClinic {
     @Id
     private Integer id;
     private String clinic;
+    private Integer count;
     private Long patients;
     private Time stime;
     private Time etime;
 
-    public PatientCountByClinic() {  }
+    public PatientCountByClinic(Integer id, Integer count) {
+        this.id = id;
+        this.count = count;
+    }
+
+    public PatientCountByClinic() {
+    }
+
     public PatientCountByClinic(String clinic, Long patients) {
         this.clinic = clinic;
         this.patients = patients;
     }
+
     public PatientCountByClinic(String clinic, Long patients, Time stime, Time etime) {
         this.clinic = clinic;
         this.patients = patients;

@@ -107,13 +107,13 @@ export class ClinicComponent implements OnInit{
     this.form = this.fb.group({
       "employee": new FormControl('', [Validators.required]),
       "clinictype": new FormControl('', [Validators.required]),
-      "ward": new FormControl,
+      "ward": new FormControl('', [Validators.required]),
       "clinicroom": new FormControl('', [Validators.required]),
       "clinicstatus": new FormControl('', [Validators.required]),
       "date": new FormControl('', [Validators.required]),
-      "starttime": new FormControl(),
-      "endtime": new FormControl(),
-      "description": new FormControl,
+      "starttime": new FormControl('', [Validators.required]),
+      "endtime": new FormControl('', [Validators.required]),
+      "description": new FormControl('', [Validators.required]),
       "patientcount": new FormControl('', [Validators.required]),
       "dopublish": new FormControl('', [Validators.required]),
 

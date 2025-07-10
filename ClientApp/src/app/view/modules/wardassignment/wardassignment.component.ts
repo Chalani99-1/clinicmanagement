@@ -102,8 +102,8 @@ export class WardassignmentComponent {
       "ward": new FormControl('', [Validators.required]),
       "assignmentstatus": new FormControl('', [Validators.required]),
       "assignmentdate": new FormControl('', [Validators.required]),
-      "resignateddate": new FormControl(),
-      "description": new FormControl(),
+      "resignateddate": new FormControl('', [Validators.required]),
+      "description": new FormControl('', [Validators.required]),
     }, {updateOn: 'change' });
   }
 

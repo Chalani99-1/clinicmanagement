@@ -71,6 +71,7 @@ export class DrugComponent  {
 
   employees: Array<Employee> = [];
   brands : Array<Brand>=[];
+  oldbrands : Array<Brand>=[];
   generics:Array<Generic> =[];
   drugstatuses:Array<Drugstatus>=[];
   drugforms:Array<Drugform>=[];
@@ -159,14 +160,14 @@ export class DrugComponent  {
       "drugform": new FormControl('',[Validators.required]),
       "drugroute": new FormControl('',[Validators.required]),
       "strength": new FormControl('',[Validators.required]),
-      "photo": new FormControl(),
+      "photo": new FormControl('',[Validators.required]),
       "qoh": new FormControl('',[Validators.required]),
       "rop": new FormControl('',[Validators.required]),
       "drugstatus": new FormControl('',[Validators.required]),
       //"dointroduced": new FormControl('',[Validators.required]),
-      "drugcontraindications": new FormControl(),
-      "drugadverseeffects": new FormControl(),
-      "drugindications": new FormControl(),
+      "drugcontraindications": new FormControl('',[Validators.required]),
+      "drugadverseeffects": new FormControl('',[Validators.required]),
+      "drugindications": new FormControl('',[Validators.required]),
       "employee": new FormControl('',[Validators.required]),
 
     },{updateOn:'change'});
@@ -183,6 +184,7 @@ export class DrugComponent  {
 
     this.bs.getAllList().then((brnds: Brand[]) => {
       this.brands = brnds;
+      this.oldbrands = brnds;
     });
 
     this.gs.getAllList().then((gnrcs: Generic[]) => {
@@ -218,10 +220,12 @@ export class DrugComponent  {
     this.ins.getAllList().then((inds:Indication[])=>{
       this.indications = inds;
       this.oldindications = Array.from(this.indications);
+      // this.createForm();
     });
 
     this.rx.get("drugs").then((regs:[])=>{
       this.regexes = regs;
+      // console.log(regs)
       this.createForm();
     });
   }
@@ -275,22 +279,25 @@ export class DrugComponent  {
   }
 
   createForm() {
-    this.form.controls['code'].setValidators([Validators.required,Validators.pattern(this.regexes['code']['regex'])]);
+    // this.form.controls['code'].setValidators([Validators.required,Validators.pattern(this.regexes['code']['regex'])]);
+    this.form.controls['code'].setValidators([Validators.required]);
     this.form.controls['generic'].setValidators([Validators.required]);
     this.form.controls['brand'].setValidators([Validators.required]);
     this.form.controls['drugform'].setValidators([Validators.required]);
-    this.form.controls['drugruote'].setValidators([Validators.required]);
+    this.form.controls['drugruote']?.setValidators([Validators.required]);
     this.form.controls['strength'].setValidators([Validators.required]);
     this.form.controls['photo'].setValidators([Validators.required]);
-    this.form.controls['qoh'].setValidators([Validators.required,Validators.pattern(this.regexes['qoh']['regex'])]);
-    this.form.controls['rop'].setValidators([Validators.required,Validators.pattern(this.regexes['rop']['regex'])]);
+    // this.form.controls['qoh'].setValidators([Validators.required,Validators.pattern(this.regexes['qoh']['regex'])]);
+    this.form.controls['qoh'].setValidators([Validators.required]);
+    // this.form.controls['rop'].setValidators([Validators.required,Validators.pattern(this.regexes['rop']['regex'])]);
+    this.form.controls['rop'].setValidators([Validators.required]);
     this.form.controls['drugstatus'].setValidators([Validators.required]);
     //this.form.controls['dointroduced'].setValidators([Validators.required]);
     this.form.controls['drugcontraindications'].setValidators([Validators.required]);
     this.form.controls['drugadverseeffects'].setValidators([Validators.required]);
     this.form.controls['drugindications'].setValidators([Validators.required]);
     this.form.controls['employee'].setValidators([Validators.required]);
-    Object.values(this.form.controls).forEach( control => { control.markAsTouched(); } );
+    Object.values(this.form.controls).forEach( control => { control.markAsUntouched(); } );
 
     for (const controlName in this.form.controls) {
       const control = this.form.controls[controlName];
@@ -315,7 +322,7 @@ export class DrugComponent  {
     }
 
     this.enableButtons(true,false,false);
-    this.filterBrand()
+    this.filterBrand();
   }
 
   enableButtons(add:boolean, upd:boolean, del:boolean){
@@ -324,14 +331,13 @@ export class DrugComponent  {
     this.enadel=del;
   }
   filterBrand(){
+
     if (this.productionordersubscription) {
       this.productionordersubscription.unsubscribe();
     }
     this.productionordersubscription = this.form.get("generic")?.valueChanges.subscribe((g: Generic) => {
       if (g) {
-        console.log(g)
-        this.brands = g.brands.filter((b:Brand) => b.generic.id === g.id);
-
+        this.brands = this.oldbrands?.filter((b:Brand) => b?.generic.id === g?.id);
       }
     });
   }

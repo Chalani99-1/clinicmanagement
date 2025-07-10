@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 
 public interface CountAllPatientByClinicDao extends JpaRepository<CountByDesignation,Integer> {
@@ -15,11 +16,14 @@ public interface CountAllPatientByClinicDao extends JpaRepository<CountByDesigna
     @Query("SELECT New PatientCountByClinic ( ct.name , sum(c.patientcount)) FROM Clinic c, Clinictype ct where c.clinictype.id = ct.id group by ct.name")
     List<PatientCountByClinic> getAllPatientByClinic();
 
-    @Query("SELECT NEW lk.earth.earthuniversity.report.entity.PatientCountByClinic(ct.name, SUM(c.patientcount), :stime, :etime) " +
-            "FROM Clinic c JOIN Clinictype ct ON c.clinictype.id = ct.id " +
-            "WHERE c.starttime BETWEEN :stime AND :etime " +
+    // In repository
+    @Query("SELECT new PatientCountByClinic(ct.name, SUM(c.patientcount)) " +
+            "FROM Clinic c JOIN c.clinictype ct " +
+            "WHERE c.date BETWEEN :startDate AND :endDate " +
             "GROUP BY ct.name")
-    List<PatientCountByClinic> getAllPatientByClinicByTime(@Param("stime") Time stime, @Param("etime") Time etime);
+    List<PatientCountByClinic> getAllPatientByClinicByTime(@Param("startDate") Date startDate,
+                                                           @Param("endDate") Date endDate);
+
 
 
 }

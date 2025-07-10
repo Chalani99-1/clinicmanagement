@@ -19,7 +19,7 @@ public class Brand {
     private Collection<Drug> drugs;
 
     @ManyToOne
-    @JoinColumn(name = "generic_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "generic_id", nullable = false)
     private Generic generic;
 
     public Integer getId() {
@@ -42,7 +42,7 @@ public class Brand {
         return generic;
     }
 
-    public void setGenericy(Generic generic) {
+    public void setGeneric(Generic generic) {
         this.generic = generic;
     }
 
@@ -57,6 +57,16 @@ public class Brand {
         if (name != null ? !name.equals(brand.name) : brand.name != null) return false;
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Brand{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", drugs=" + drugs +
+                ", generic=" + generic +
+                '}';
     }
 
     @Override
