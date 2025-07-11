@@ -5,7 +5,8 @@ import org.springframework.security.core.parameters.P;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.sql.Date;
+import java.util.Date;
+//dont use java.sql.date here
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -22,7 +23,7 @@ public class Patient {
     private String name;
     @Basic
     @Column(name = "dob")
-    @Pattern(regexp ="^\\d{4}/\\d{2}/\\d{2}$",message = "Invalid Date Format")
+//    @Pattern(regexp ="^\\d{4}/\\d{2}/\\d{2}$",message = "Invalid Date Format")
     private Date dob;
     @Basic
     @Column(name = "nic")

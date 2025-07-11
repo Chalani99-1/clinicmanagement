@@ -22,10 +22,20 @@ public interface ClinicDao extends JpaRepository<Clinic,Integer> {
 //    @Query("select c from Clinic c where c.clinictype.name = :name and c.date = :date")
 //    List<Clinic> findByClinicByDate(@Param("name") String name, @Param("date") Date date);
 
-    @Query("select c from Clinic c where c.clinicroom.name = :name and c.date = :date and c.starttime=:starttime and c.endtime=:endtime")
-    List<Clinic> findByClinicByDate(@Param("name") String name, @Param("date") Date date, @Param("starttime") Time starttime ,@Param("endtime")Time endtime);
+//    @Query("select c from Clinic c where c.clinicroom.name = :name and c.date = :date and c.starttime=:starttime and c.endtime=:endtime")
+//    List<Clinic> findByClinicByDate(@Param("name") String name, @Param("date") Date date, @Param("starttime") Time starttime ,@Param("endtime")Time endtime);
 
-
+    @Query("SELECT c FROM Clinic c WHERE c.clinictype.id = :clinictypeid " +
+            "AND c.clinicroom.id = :clinicroomid " +
+            "AND c.date = :date " +
+            "AND c.starttime = :stime " +
+            "AND c.endtime = :etime ")
+    List<Clinic> findDuplicateClinicByTimeSlot(
+                                               @Param("clinictypeid") Integer id1,
+                                               @Param("clinicroomid") Integer id2,
+                                               @Param("date") Date date,
+                                               @Param("stime") Time starttime,
+                                               @Param("etime") Time endtime);
 
 
 //    @Query(value = "select c  from Clinic c where c.date =:getdate")

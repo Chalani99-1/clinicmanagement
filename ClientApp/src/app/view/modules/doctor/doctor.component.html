@@ -1,6 +1,6 @@
-<mat-grid-list [cols]="12" rowHeight="4rem">
+<mat-grid-list [cols]="20" rowHeight="4rem">
 
-  <mat-grid-tile [colspan]="4" [rowspan]="10">
+  <mat-grid-tile [colspan]="7" [rowspan]="10">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Doctor Detail</mat-card-title>
@@ -90,7 +90,7 @@
               <mat-cell *matCellDef="let element">
                 <div *ngIf="i<inbinders.length-1" [innerHTML]="uiassist.getProperty(element, inbinders[i])"></div>
                 <div *ngIf="i>=inbinders.length-1">
-                  <button mat-raised-button (click)="deleteRaw(element)">Remove</button>
+                  <button mat-raised-button id="in-remove-btn" (click)="deleteRaw(element)">Remove</button>
                 </div>
               </mat-cell>
             </ng-container>
@@ -113,7 +113,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>Description</mat-label>
-          <input matInput formControlName="descript">
+          <input matInput formControlName="description">
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -147,7 +147,7 @@
   </mat-grid-tile>
 
 
-  <mat-grid-tile [colspan]="8" [rowspan]="4">
+  <mat-grid-tile [colspan]="13" [rowspan]="4">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Doctor Search</mat-card-title>
@@ -204,7 +204,7 @@
   </mat-grid-tile>
 
 
-  <mat-grid-tile [colspan]="8" [rowspan]="6">
+  <mat-grid-tile [colspan]="13" [rowspan]="6">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Doctor Table</mat-card-title>

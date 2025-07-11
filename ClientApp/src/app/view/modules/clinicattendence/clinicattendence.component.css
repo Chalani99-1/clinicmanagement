@@ -62,6 +62,13 @@ mat-card-header { background:  #24A49B; font-weight: bold ;color:white; border-t
   color: white;
 }
 
+#butssearch button{
+  width: 150px;
+  margin:3px;
+  background-color: #024046;
+  color: white;
+}
+
 
 .selected-row{
   background-color:#D2FEF1!important;

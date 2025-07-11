@@ -462,7 +462,7 @@ export class PatientComponent implements OnInit {
 
       confirm.afterClosed().subscribe(async result => {
         if (result) {
-          console.log(JSON.stringify(this.patient));
+          // console.log(JSON.stringify(this.patient));
           this.ps.add(this.patient).then((responce: [] | undefined) => {
             if (responce != undefined) { // @ts-ignore
               console.log("Add-" + responce['id'] + "-" + responce['url'] + "-" + (responce['errors'] == ""));
@@ -525,6 +525,9 @@ export class PatientComponent implements OnInit {
       this.clearImage();
     }
     this.patient.photo = "";
+    //@ts-ignore
+
+    this.patient.dob = this.dp.transform(this.patient.dob ,"yyyy-MM-dd")
 
     //@ts-ignore
     this.patient.gender = this.genders.find(g => g.id === this.patient.gender.id);

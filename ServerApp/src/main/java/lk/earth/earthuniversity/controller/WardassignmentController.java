@@ -59,6 +59,16 @@ public class WardassignmentController {
 //        if(wardassignmentdao.findByMyEmpId(wardassignment.getEmployee().getNumber())!=null)
 //            errors = errors+"<br> Existing Employee";
 
+//business logic for not allowing same doctor to be assigned to 2 wards at the same time
+        List<Wardassignment> extWardAssgnmnt = wardassignmentdao.
+                findDoctorInAnotherWard(
+                        wardassignment.getEmployee().getId(),
+                        wardassignment.getWard().getId());
+
+        if (!extWardAssgnmnt.isEmpty()) {
+            errors = "Doctor already assigned <br> " + errors;
+        }
+
         if(errors=="")
             wardassignmentdao.save(wardassignment);
         else
@@ -78,7 +88,14 @@ public class WardassignmentController {
 
         HashMap<String,String> responce = new HashMap<>();
         String errors="";
+        List<Wardassignment> extWardAssgnmnt = wardassignmentdao.
+                findDoctorInAnotherWard(
+                        wardassignment.getEmployee().getId(),
+                        wardassignment.getWard().getId());
 
+        if (!extWardAssgnmnt.isEmpty()) {
+            errors = "Doctor already assigned <br> " + errors;
+        }
 
         if(errors=="") wardassignmentdao.save(wardassignment);
         else errors = "Server Validation Errors : <br> "+errors;

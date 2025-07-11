@@ -47,9 +47,9 @@ export class DoctorComponent {
   csprompts: string[] = ['Search by Employee Number','Search by Full Name','Search by SLMC reg number',
     'Search by Speciality',  'Search by Email','Degree Year'];
 
-  incolumns: string[] = ['country', 'university', 'degree', 'year'];
-  inheaders: string[] = ['Country', 'University', 'Degree', 'Year'];
-  inbinders: string[] = ['university.country.name', 'university.name', 'degree.name', 'year'];
+  incolumns: string[] = ['country', 'university', 'degree', 'year','remove'];
+  inheaders: string[] = ['Country', 'University', 'Degree', 'Year','Remove'];
+  inbinders: string[] = ['university.country.name', 'university.name', 'degree.name', 'year','getBtn()'];
 
   innerdata:any;
   oldinnerdata:any;
@@ -91,6 +91,10 @@ export class DoctorComponent {
   public cssearch!: FormGroup;
   public ssearch!: FormGroup;
   public form!: FormGroup;
+
+  getBtn(element: Doctordegree) {
+    return `<button mat-raised-button>Remove</button>`;
+  }
 
   constructor(   private ds: Doctorservice,
                  private fb: FormBuilder,
@@ -287,8 +291,8 @@ export class DoctorComponent {
               (cssearchdata.csfullname==null||doctor.employee.fullname.includes(cssearchdata.csfullname))  &&
               (cssearchdata.csslmcregno==null||doctor.slmcregno.includes(cssearchdata.csslmcregno))&&
               (cssearchdata.csspeciality==null||doctor.speciality.name.includes(cssearchdata.csspeciality)) &&
-              (cssearchdata.csemail==null||doctor.employee.email.includes(cssearchdata.csemail));
-             // (cssearchdata.csdate == null || doctor.employee..date.includes(cssearchdata.csdate));
+              (cssearchdata.csemail==null||doctor.employee.email.includes(cssearchdata.csemail)) &&
+             (cssearchdata.csdegreeyear == null || doctor.degreeyear.toString().includes(cssearchdata.csdegreeyear));
     });
     this.data.filter = 'xx';
   }
@@ -559,13 +563,20 @@ export class DoctorComponent {
 
       //@ts-ignore
       this.doctor.doctordegrees = this.doctordegrees.find(dd=>dd.university ===this.doctor.doctordegrees);});
+      // @ts-ignore
+    this.doctor.speciality = this.specialities.find(dd=>dd.id ===this.doctor.speciality.id);
+    // @ts-ignore
+    this.doctor.country = this.countries.find(dd=>dd.id ===this.doctor.country.id);
+
+    // @ts-ignore
+    this.doctor.degreeyear =this.dp.transform(this.doctor.degreeyear,'yyyy-MM-dd')
 
     //@ts-ignore
     this.doctor.employee = this.employees.find(e => e.fullname === this.doctor.employee.fullname);
     //@ts-ignore
     // this.doctor.speciality = this.specialities.find(s => s.id === this.doctor.speciality.id);
-    // //@ts-ignore
-    // this.doctor.doctorgrade = this.doctorgrades.find(dg => dg.id === this.doctor.doctorgrade.id);
+    //@ts-ignore
+    this.doctor.doctorgrade = this.doctorgrades.find(dg => dg.id === this.doctor.doctorgrade.id);
     // //@ts-ignore
     // this.doctor.doctorgrade = this.doctorgrades.find(dg => dg.id === this.doctor.doctorgrade.id);
     // //@ts-ignore

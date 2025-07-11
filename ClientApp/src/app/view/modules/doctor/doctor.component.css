@@ -93,6 +93,6 @@ button:disabled {
 .ng-valid.required {
   background-color: #C2E6FE;
 }
-
-
-
+#in-remove-btn{
+  margin-right:10px !important;
+}

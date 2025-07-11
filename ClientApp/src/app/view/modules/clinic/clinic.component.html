@@ -1,19 +1,19 @@
-<mat-grid-list [cols]="12" rowHeight="4rem" >
+<mat-grid-list [cols]="12" rowHeight="4rem">
 
-  <mat-grid-tile [colspan]="4" [rowspan]="10" >
+  <mat-grid-tile [colspan]="4" [rowspan]="10">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Clinic Shedule Detail</mat-card-title>
       </mat-card-header>
       <mat-card-content id="clinicform">
-        <form [formGroup]="form" >
+        <form [formGroup]="form">
 
 
           <mat-form-field appearance="outline">
             <mat-label>Nurse</mat-label>
             <mat-select formControlName="employee">
               <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let employee of employees" [value]="employee">{{employee.fullname}}</mat-option>
+              <mat-option *ngFor="let employee of employees" [value]="employee">{{ employee.fullname }}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -21,7 +21,7 @@
             <mat-label>Clinic Type</mat-label>
             <mat-select formControlName="clinictype">
               <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let clinictype of clinictypes" [value]="clinictype">{{clinictype.name}}</mat-option>
+              <mat-option *ngFor="let clinictype of clinictypes" [value]="clinictype">{{ clinictype.name }}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -29,7 +29,7 @@
             <mat-label>Ward</mat-label>
             <mat-select formControlName="ward">
               <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let ward of wards" [value]="ward">{{ward.name}}</mat-option>
+              <mat-option *ngFor="let ward of wards" [value]="ward">{{ ward.name }}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -37,7 +37,7 @@
             <mat-label>Clinic Room</mat-label>
             <mat-select formControlName="clinicroom">
               <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let clinicroom of clinicrooms" [value]="clinicroom">{{clinicroom.name}}</mat-option>
+              <mat-option *ngFor="let clinicroom of clinicrooms" [value]="clinicroom">{{ clinicroom.name }}</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -45,7 +45,8 @@
             <mat-label>Clinic Status</mat-label>
             <mat-select formControlName="clinicstatus">
               <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let clinicstatus of clinicstatuses" [value]="clinicstatus">{{clinicstatus.name}}</mat-option>
+              <mat-option *ngFor="let clinicstatus of clinicstatuses" [value]="clinicstatus">{{ clinicstatus.name }}
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -84,10 +85,10 @@
           </mat-form-field>
 
           <div id="butpanel">
-            <button mat-raised-button (click)="add()" >Add</button>
+            <button mat-raised-button (click)="add()">Add</button>
             <button mat-raised-button (click)="clear()">Clear</button>
-            <button mat-raised-button (click)="update()" >Update</button>
-            <button mat-raised-button (click)="delete()" >Delete</button>
+            <button mat-raised-button (click)="update()">Update</button>
+            <button mat-raised-button (click)="delete()">Delete</button>
           </div>
 
         </form>
@@ -102,41 +103,48 @@
         <mat-card-title>Clinic Shedule Search</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="ssearch">
+        <form id="s-search-form" [formGroup]="ssearch">
+          <div class="s-search-div">
+            <mat-form-field appearance="outline">
+              <mat-label>Search by Clinic Type</mat-label>
+              <mat-select formControlName="ssclinictype">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let clinictype of clinictypes" [value]="clinictype.id">{{ clinictype.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br>
+            <mat-form-field appearance="outline">
+              <mat-label>Search by Ward</mat-label>
+              <mat-select formControlName="ssward">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let ward of wards" [value]="ward.id">{{ ward.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Search by Clinic Type</mat-label>
-            <mat-select formControlName="ssclinictype">
-              <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let clinictype of clinictypes" [value]="clinictype.id">{{clinictype.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br>
-          <mat-form-field appearance="outline">
-            <mat-label>Search by Ward</mat-label>
-            <mat-select formControlName="ssward">
-              <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let ward of wards" [value]="ward.id">{{ward.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+            <br>
 
-          <br>
+            <mat-form-field appearance="outline">
+              <mat-label>Search by Clinic Status</mat-label>
+              <mat-select formControlName="ssclinicstatus">
+                <mat-option [value]="null" selected>Not Selected</mat-option>
+                <mat-option *ngFor="let clinicstatus of clinicstatuses"
+                            [value]="clinicstatus.id">{{ clinicstatus.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Search by Clinic Status</mat-label>
-            <mat-select formControlName="ssclinicstatus">
-              <mat-option [value]="null" selected>Not Selected</mat-option>
-              <mat-option *ngFor="let clinicstatus of clinicstatuses" [value]="clinicstatus.id">{{clinicstatus.name}}</mat-option>
-            </mat-select>
-          </mat-form-field>
+          </div>
 
-
-
-
-
-          <div id = butssearch>
-            <button mat-raised-button (click)="btnSearchMc()"><mat-icon>search</mat-icon> Search </button>
-            <button mat-raised-button (click)="btnSearchClearMc()"><mat-icon>reorder</mat-icon> Clear Search </button>
+          <div id=butssearch class="s-search-div">
+            <button mat-raised-button (click)="btnSearchMc()">
+              <mat-icon>search</mat-icon>
+              Search
+            </button>
+            <button mat-raised-button (click)="btnSearchClearMc()">
+              <mat-icon>reorder</mat-icon>
+              Clear Search
+            </button>
           </div>
 
         </form>
@@ -159,15 +167,15 @@
         <mat-table [dataSource]="data">
 
           <ng-container *ngFor="let column of columns;let i = index;" [matColumnDef]="column">
-            <mat-header-cell *matHeaderCellDef> {{headers[i]}} </mat-header-cell>
-            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef> {{ headers[i] }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ uiassist.getProperty(element, binders[i]) }}</mat-cell>
           </ng-container>
 
           <ng-container *ngFor="let cscolumn of cscolumns;let i = index;" [matColumnDef]="cscolumn">
             <mat-header-cell *matHeaderCellDef>
               <form [formGroup]="csearch" class="csearch">
                 <mat-form-field appearance="outline">
-                  <mat-label>{{csprompts[i]}}</mat-label>
+                  <mat-label>{{ csprompts[i] }}</mat-label>
                   <input matInput [formControlName]="cscolumn" (keyup)="filterTable()">
                 </mat-form-field>
               </form>
@@ -176,7 +184,8 @@
 
           <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
           <mat-header-row *matHeaderRowDef="cscolumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)" [ngClass]="{'selected-row': row === selectedrow}" ></mat-row>
+          <mat-row *matRowDef="let row; columns: columns;" (click)="fillForm(row)"
+                   [ngClass]="{'selected-row': row === selectedrow}"></mat-row>
 
         </mat-table>
 

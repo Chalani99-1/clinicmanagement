@@ -16,6 +16,13 @@ mat-card-header { background:  #24A49B; font-weight: bold ;color:white; border-t
 
 #listtrnasfer {display: inline-flex; margin-bottom: 10px;margin-left: 10px;}
 
+#s-search-form{
+  display: flex;
+  flex-direction: column;
+}
+.s-search-div{
+  display: flex;
+}
 /*#ssearch mat-label{width:50px}*/
 
 /* Doctor Form */

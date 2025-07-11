@@ -207,4 +207,24 @@ public class Clinic {
     public void setClinicattendences(Collection<Clinicattendence> clinicattendences) {
         this.clinicattendences = clinicattendences;
     }
+
+    @Override
+    public String toString() {
+        return "Clinic{" +
+                "id=" + id +
+                ", date=" + date +
+                ", starttime=" + starttime +
+                ", endtime=" + endtime +
+                ", description='" + description + '\'' +
+                ", patientcount=" + patientcount +
+                ", dopublish=" + dopublish +
+                ", clinictype=" + clinictype +
+                ", ward=" + ward +
+                ", clinicstatus=" + clinicstatus +
+                ", employee=" + employee +
+                ", clinicroom=" + clinicroom +
+                ", patientattendences=" + patientattendences +
+                ", clinicattendences=" + clinicattendences +
+                '}';
+    }
 }
