@@ -104,7 +104,7 @@ export class PatientattendenceComponent  {
       "timein": new FormControl('', [Validators.required]),
       "timeout": new FormControl('', [Validators.required]),
       "employee": new FormControl('', [Validators.required]),
-      "description": new FormControl(),
+      "description": new FormControl('', [Validators.required]),
 
     }, {updateOn: 'change'});
 
